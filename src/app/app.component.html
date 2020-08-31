@@ -1,0 +1,31 @@
+<div>
+  <div class="tabs is-boxed">
+    <ul>
+      <li
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a [routerLink]="['/']">HOME</a>
+      </li>
+
+      <li routerLinkActive="is-active">
+        <a [routerLink]="['/users']">Users</a>
+      </li>
+
+      <li routerLinkActive="is-active">
+        <a [routerLink]="['/database']">Database</a>
+      </li>
+    </ul>
+  </div>
+  <div class="mt-3">
+    <!-- <app-home></app-home> -->
+  </div>
+  <div class="mt-2">
+    <!-- <app-servers></app-servers> -->
+  </div>
+  <div class="mt-2">
+    <!-- <app-users></app-users> -->
+  </div>
+</div>
+
+<router-outlet></router-outlet>

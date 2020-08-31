@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-4">
+    <div class="list-group">
+      <a
+        class="list-group-item"
+        *ngFor="let server of servers"
+        [routerLink]="['/database', server.id]"
+        [queryParams]="{ allowEdit: server.id === 3 ? '1' : '0' }"
+        fragment="loading"
+      >
+        {{ server.name }}
+      </a>
+    </div>
+  </div>
+  <!-- <button class="button is-primary" (click)="loadDatabase()">
+    Load Database
+  </button> -->
+  <div class="col-xs-12 col-sm-4">
+    <!-- <app-data></app-data> -->
+    <router-outlet></router-outlet>
+    <!-- <hr /> -->
+    <!-- <app-data-edit></app-data-edit> -->
+  </div>
+</div>
