@@ -1,40 +1,69 @@
 import { Component, OnInit } from '@angular/core';
 import { ServersService } from '../servers.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import {
+  ActivatedRoute,
+  Params,
+  RouterStateSnapshot,
+  ActivatedRouteSnapshot,
+  Router,
+} from '@angular/router';
+import { CanComponentDeactivate } from './can-deactivate-guard.service';
+
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-data-edit',
   templateUrl: './data-edit.component.html',
   styleUrls: ['./data-edit.component.css'],
 })
-export class DataEditComponent implements OnInit {
+export class DataEditComponent implements OnInit, CanComponentDeactivate {
   server: { id: number; name: string; status: string };
   serverName = '';
   serverStatus = '';
   allowEdit: boolean = false;
   editId: number;
+  changesSaved = false;
 
   constructor(
     private serversService: ServersService,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly router: Router
   ) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe((params: Params) => {
-      console.log(params["allowEdit"])
-      this.allowEdit = params["allowEdit"]==='1'? true:false
+      this.allowEdit = params['allowEdit'] === '1' ? true : false;
     });
-    this.server = this.serversService.getServer(1);
+    this.server = this.serversService.getServer(
+      +this.route.snapshot.params['id']
+    );
     this.serverName = this.server.name;
     this.serverStatus = this.server.status;
     // this.editId = this.route.snapshot.queryParams['allowEdit'];
   }
 
   onUpdateServer() {
-    console.log(this.editId);
     this.serversService.updateServer(this.server.id, {
       name: this.serverName,
       status: this.serverStatus,
     });
+    this.changesSaved = true;
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
+  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+    if (!this.allowEdit) {
+      return true;
+    }
+
+    if (
+      (this.serverName !== this.server.name ||
+        this.serverStatus !== this.server.status) &&
+      !this.changesSaved
+    ) {
+      return confirm('Do You Want To Discard the changes?');
+    } else {
+      return true;
+    }
   }
 }

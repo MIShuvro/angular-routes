@@ -15,6 +15,18 @@ import { DataEditComponent } from './components/database/data-edit/data-edit.com
 import { ServersService } from './components/database/servers.service';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
+/**
+ *  Guard Start
+ */
+import { AuthGuard } from './api-service/auth-guard.service';
+import { AuthService } from './api-service/auth.service';
+import { CheckAdmin } from './api-service/authGuard-checkAdmin.service';
+import { CanDeactivateGuard } from './components/database/data-edit/can-deactivate-guard.service';
+
+/**
+ * Guard End
+ */
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +39,13 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     NotFoundComponent,
   ],
   imports: [FormsModule, BrowserModule, AppRoutingModule],
-  providers: [ServersService],
+  providers: [
+    ServersService,
+    AuthGuard,
+    AuthService,
+    CheckAdmin,
+    CanDeactivateGuard,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

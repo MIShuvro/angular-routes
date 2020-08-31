@@ -9,6 +9,19 @@ import { DataEditComponent } from './components/database/data-edit/data-edit.com
 import { DataComponent } from './components/database/data/data.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
+/**
+ * Auth Guard start
+ */
+
+import { AuthGuard } from './api-service/auth-guard.service';
+import { CheckAdmin } from './api-service/authGuard-checkAdmin.service';
+
+import { CanDeactivateGuard } from './components/database/data-edit/can-deactivate-guard.service';
+
+/**
+ *  Auth Guard end
+ */
+
 const routes: Routes = [
   {
     path: '',
@@ -27,15 +40,20 @@ const routes: Routes = [
 
   {
     path: 'database',
+    canActivate: [AuthGuard],
+    //canActivateChild: [AuthGuard],
     component: DatabaseComponent,
     children: [
       {
         path: ':id',
+
         component: DataComponent,
       },
       {
         path: ':id/edit',
+        // canActivate: [AuthGuard],
         component: DataEditComponent,
+        canDeactivate: [CanDeactivateGuard],
       },
     ],
   },
