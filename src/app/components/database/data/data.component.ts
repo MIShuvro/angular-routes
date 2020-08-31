@@ -17,11 +17,15 @@ export class DataComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const id = +this.route.snapshot.params['id'];
-    console.log(id);
-    this.server = this.serversService.getServer(id);
-    this.route.params.subscribe((params) => {
-      this.server = this.serversService.getServer(+params.id);
+    // const id = +this.route.snapshot.params['id'];
+    // console.log(id);
+    // this.server = this.serversService.getServer(id);
+    // this.route.params.subscribe((params) => {
+    //   this.server = this.serversService.getServer(+params.id);
+    // });
+
+    this.route.data.subscribe((data) => {
+      this.server = data['server'];
     });
   }
 

@@ -17,6 +17,7 @@ import { AuthGuard } from './api-service/auth-guard.service';
 import { CheckAdmin } from './api-service/authGuard-checkAdmin.service';
 
 import { CanDeactivateGuard } from './components/database/data-edit/can-deactivate-guard.service';
+import { ServerResolver } from './components/database/data/data-resolver.service';
 
 /**
  *  Auth Guard end
@@ -48,6 +49,7 @@ const routes: Routes = [
         path: ':id',
 
         component: DataComponent,
+        resolve: { server: ServerResolver },
       },
       {
         path: ':id/edit',

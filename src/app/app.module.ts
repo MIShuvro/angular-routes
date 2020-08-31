@@ -27,6 +27,16 @@ import { CanDeactivateGuard } from './components/database/data-edit/can-deactiva
  * Guard End
  */
 
+/**
+ * Resolver Start
+ */
+
+import { ServerResolver } from './components/database/data/data-resolver.service';
+
+/**
+ * Resolver End
+ */
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +55,7 @@ import { CanDeactivateGuard } from './components/database/data-edit/can-deactiva
     AuthService,
     CheckAdmin,
     CanDeactivateGuard,
+    ServerResolver,
   ],
   bootstrap: [AppComponent],
 })
